@@ -1,0 +1,221 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Intelligent Object Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        #webcam-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        #webcam {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #label-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4285f4;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1a73e8;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="webcam-container">
+        <video id="webcam" autoplay></video>
+    </div>
+    <div id="label-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.0.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+   
+</body> -->
+
+<!-- <script>
+    let model, webcam, labelContainer, maxPredictions;
+
+    async function init() {
+        // Load the MobileNet model
+        model = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json');
+        maxPredictions = 3; // Set the number of predictions
+
+        const flip = true;
+        webcam = await tf.data.webcam(document.getElementById('webcam'));
+        labelContainer = document.getElementById('label-container');
+        for (let i = 0; i < maxPredictions; i++) {
+            labelContainer.appendChild(document.createElement('div'));
+        }
+
+        predict();
+    }
+
+    async function predict() {
+        while (true) {
+            const img = await webcam.capture();
+            const predictions = await predictImage(img);
+            showPredictions(predictions);
+            img.dispose();
+
+            await tf.nextFrame();
+        }
+    }
+
+    async function predictImage(img) {
+        const activation = tf.browser.fromPixels(img)
+            .resizeNearestNeighbor([224, 224])
+            .toFloat()
+            .div(127.5)
+            .sub(1)
+            .expandDims();
+
+        const predictions = await model.predict(activation);
+        return predictions;
+    }
+
+    function showPredictions(predictions) {
+        labelContainer.innerHTML = '';
+        const classes = ['person', 'mobile', 'mouse', "keyboard","bottle","pen"]; // Replace with your specific object labels
+        const topPredictions = Array.from(predictions.argMax(1).dataSync());
+        topPredictions.forEach((classIndex, i) => {
+            const className = classes[classIndex];
+            const probability = predictions.dataSync()[i];
+            const classPrediction = `${className}: ${probability.toFixed(2)}`;
+            const labelElement = document.createElement('div');
+            labelElement.textContent = classPrediction;
+            labelContainer.appendChild(labelElement);
+        });
+    }
+
+    init();
+</script> -->
+<!-- <div>Teachable Machine Image Model</div>
+<button type="button" onclick="init()">Start</button>
+<div id="webcam-container"></div>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    // More API functions here:
+    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "https://teachablemachine.withgoogle.com/models/CnwNpiYi_/";
+
+    let model, webcam, labelContainer, maxPredictions;
+
+    // Load the image model and setup the webcam
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // or files from your local hard drive
+        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append elements to the DOM
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictions; i++) { // and class labels
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function loop() {
+        webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    // run the webcam image through the image model
+    async function predict() {
+        // predict can take in an image, video or canvas html element
+        const prediction = await model.predict(webcam.canvas);
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
+    }
+</script>
+
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intelligent Object Classifier</title>
+    <!-- Add CSS and JavaScript libraries if needed -->
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="../static/scripts/index.js"></script>
+</head>
+<body>
+    <h1>Intelligent Object Classifier</h1>
+    
+    <!-- Add webcam container and label container -->
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    
+    <!-- Add other UI elements as needed -->
+    <button id="start-button">Start</button>
+    
+    <!-- Add script to initialize the webcam and perform classification -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
