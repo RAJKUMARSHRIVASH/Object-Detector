@@ -1,6 +1,5 @@
 # Object-Detector
-This is an AI Tool which will be if trained can detect and distinguish the Objects further and give results relavent to it.
-
+This is an AI Tool that will if trained can detect and distinguish the Objects further and give results relevant to it.
 ## Features
 
 - Cross-platform
